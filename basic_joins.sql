@@ -17,3 +17,28 @@ on v.visit_id = t.visit_id
 where t.transaction_id is null
 group by  v.customer_id
 
+-- 197. Rising Temperature
+
+select w1.id from weather as w1 
+inner join 
+weather as w2 
+on w1.recordDate= w2.recordDate+ INTERVAL  '1 day'
+where w1.temperature> w2.temperature
+
+-- 577. Employee Bonus
+# Write your MySQL query statement below
+select e.name, b.bonus
+from employee e left join bonus b 
+on e.empId=b.empId
+where b.bonus<1000 or b.bonus is null
+
+-- 570. Managers with at Least 5 Direct Reports
+
+with data as (
+select managerId
+from employee
+group by managerId
+having count(id)>=5
+)
+select e.name
+from data inner join employee e on e.id=data.managerId
